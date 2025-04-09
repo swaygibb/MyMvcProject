@@ -10,4 +10,9 @@ This project is to showcase a little MVC work. A simple application without auth
 - Task Manager
 - Blog Manager
 
+# To Run this project
+
+- Should be able to just clone the project and run it
+- The database will initialize and seed automatically using SQLite
+
 # Screenshots
