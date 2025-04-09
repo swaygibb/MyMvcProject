@@ -1,0 +1,15 @@
+﻿@model MyMvcProject.Models.Task
+
+@{
+    ViewData["Title"] = "Delete Task";
+}
+
+<h1>Delete Task</h1>
+
+<form method="post">
+    <div class="alert alert-warning">
+        Are you sure you want to delete this task: <strong>@Model.Title</strong>?
+    </div>
+    <button type="submit" class="btn btn-danger">Yes, Delete</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+</form>

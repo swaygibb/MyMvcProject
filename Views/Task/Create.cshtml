@@ -1,0 +1,20 @@
+﻿@model MyMvcProject.Models.Task
+
+@{
+    ViewData["Title"] = "Create Task";
+}
+
+<h1>Create New Task</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input type="text" class="form-control" id="Title" name="Title" required />
+    </div><br />
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea class="form-control" id="Description" name="Description" required></textarea>
+    </div><br />
+    <button type="submit" class="btn btn-primary">Create Task</button>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Cancel</a>
+</form>

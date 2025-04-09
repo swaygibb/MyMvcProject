@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MyMvcProject.Models.Task>
+
+@{
+    ViewData["Title"] = "Task Manager";
+}
+
+<div class="text-left mb-4">
+    <h1 class="display-4">Task Manager</h1>
+    <div class="text-end">
+        <a href="@Url.Action("Create")" class="btn btn-primary">Create New Task</a>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center text-light bg-secondary">
+        <strong>No tasks available.</strong> Use the button above to create your first task!
+    </div>
+}
+else
+{
+    <table class="table table-dark table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Created At</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model)
+            {
+                <tr>
+                    <td>@task.Title</td>
+                    <td>@task.Description</td>
+                    <td>@task.CreatedAt.ToShortDateString()</td>
+                    <td>@(task.IsCompleted ? "Completed" : "Pending")</td>
+                    <td>
+                        @if (!task.IsCompleted)
+                        {
+                            <a href="@Url.Action("Complete", new { id = task.Id })" class="btn btn-success btn-sm">Complete</a>
+                        }
+                        <a href="@Url.Action("Delete", new { id = task.Id })" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
