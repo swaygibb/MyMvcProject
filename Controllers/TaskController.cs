@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyMvcProject.Data;
+using MyMvcProject.ViewModels;
 
 namespace MyMvcProject.Controllers
 {
@@ -15,7 +16,23 @@ namespace MyMvcProject.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tasks.ToListAsync());
+            // NOTE: LINQ query here is only executed when the ToListAsync() method is called, not when the func is called, that just helps setup the query.
+            
+            var taskQuery = Models.Task.RecentTasks(_context.Tasks);
+            // One thing to watch out for is if you modify data here before its actually called can create some unexpected behavior.
+            var tasks = await taskQuery.ToListAsync(); // Calling the Recent Tasks Func
+            var total = tasks.Count;
+            var completed = tasks.Count(t => t.IsCompleted);
+
+            var summary = new TaskSummary(total, completed);
+
+            var viewModel = new TaskIndexViewModel
+            {
+                Tasks = tasks,
+                Summary = summary
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Create()
