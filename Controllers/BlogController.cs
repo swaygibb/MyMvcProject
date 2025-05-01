@@ -15,7 +15,11 @@ namespace MyMvcProject.Controllers
 
         public IActionResult Index()
         {
-            var posts = _context.BlogPosts.OrderByDescending(p => p.CreatedAt).ToList();
+            // NOTE: LINQ query here is only executed when the ToList() method is called, not when the func is called, that just helps setup the query.
+
+            var postQuery = BlogPost.RecentPosts(_context.BlogPosts);
+            // One thing to watch out for is if you modify data here before its actually called can create some unexpected behavior.
+            var posts = postQuery.ToList(); // Calling the RecentPosts func
             return View(posts);
         }
 
